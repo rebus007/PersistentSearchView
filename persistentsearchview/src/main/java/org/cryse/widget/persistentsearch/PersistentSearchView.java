@@ -645,8 +645,9 @@ public class PersistentSearchView extends RevealViewGroup {
             mSearchSuggestions.clear();
             mSuggestionBuilderAsync.buildSearchSuggestionAsync(10, query, new SearchSuggestionsBuilderAsync.SearchSuggestionsAsync() {
                 @Override
-                public void buildSearchSuggestion(Collection<SearchItem> suggestions) {
+                public void buildSearchSuggestion(Collection<SearchItem> suggestions, boolean clearSuggestions) {
                     if (suggestions != null && suggestions.size() > 0) {
+                        if (clearSuggestions) mSearchSuggestions.clear();
                         mSearchSuggestions.addAll(suggestions);
                     }
                     mSearchItemAdapter.notifyDataSetChanged();

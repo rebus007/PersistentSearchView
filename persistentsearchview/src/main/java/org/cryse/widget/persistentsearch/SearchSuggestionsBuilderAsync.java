@@ -12,7 +12,7 @@ public interface SearchSuggestionsBuilderAsync {
     void buildSearchSuggestionAsync(int maxCount, String query, SearchSuggestionsAsync searchSuggestionsAsync);
 
     public interface SearchSuggestionsAsync {
-        void buildSearchSuggestion(Collection<SearchItem> collection);
+        void buildSearchSuggestion(Collection<SearchItem> suggestions, boolean clearSuggestions);
     }
 
 }

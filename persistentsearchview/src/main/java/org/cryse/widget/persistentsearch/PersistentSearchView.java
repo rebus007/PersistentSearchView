@@ -86,6 +86,7 @@ public class PersistentSearchView extends RevealViewGroup {
     private String mSearchEditTextHint;
     private int mSearchEditTextHintColor;
     private SearchSuggestionsBuilder mSuggestionBuilder;
+    private SearchSuggestionsBuilderAsync mSuggestionBuilderAsync;
     private SearchItemAdapter mSearchItemAdapter;
     private ArrayList<SearchItem> mSearchSuggestions;
     private KeyboardView mCustomKeyboardView;
@@ -619,6 +620,16 @@ public class PersistentSearchView extends RevealViewGroup {
             }
             mSearchItemAdapter.notifyDataSetChanged();
         }
+
+        if (mSuggestionBuilderAsync != null) {
+            mSearchSuggestions.clear();
+            Collection<SearchItem> suggestions = mSuggestionBuilderAsync.buildEmptySearchSuggestion(10);
+            if (suggestions != null && suggestions.size() > 0) {
+                mSearchSuggestions.addAll(suggestions);
+            }
+            mSearchItemAdapter.notifyDataSetChanged();
+        }
+
     }
 
     private void buildSearchSuggestions(String query) {
@@ -629,6 +640,18 @@ public class PersistentSearchView extends RevealViewGroup {
                 mSearchSuggestions.addAll(suggestions);
             }
             mSearchItemAdapter.notifyDataSetChanged();
+        }
+        if (mSuggestionBuilderAsync != null) {
+            mSearchSuggestions.clear();
+            mSuggestionBuilderAsync.buildSearchSuggestionAsync(10, query, new SearchSuggestionsBuilderAsync.SearchSuggestionsAsync() {
+                @Override
+                public void buildSearchSuggestion(Collection<SearchItem> suggestions) {
+                    if (suggestions != null && suggestions.size() > 0) {
+                        mSearchSuggestions.addAll(suggestions);
+                    }
+                    mSearchItemAdapter.notifyDataSetChanged();
+                }
+            });
         }
     }
 
@@ -820,8 +843,15 @@ public class PersistentSearchView extends RevealViewGroup {
         this.mHomeButtonCloseIconState = homeButtonCloseIconState;
     }
 
+    public void setSuggestionBuilder(SearchSuggestionsBuilderAsync suggestionBuilder) {
+        this.mSuggestionBuilderAsync = suggestionBuilder;
+        this.mSuggestionBuilder = null;
+    }
+
+
     public void setSuggestionBuilder(SearchSuggestionsBuilder suggestionBuilder) {
         this.mSuggestionBuilder = suggestionBuilder;
+        this.mSuggestionBuilderAsync = null;
     }
 
     private void fromNormalToEditing() {

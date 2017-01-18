@@ -1,6 +1,7 @@
 package org.cryse.widget.persistentsearch.sample;
 
 import android.content.Context;
+import android.view.View;
 
 import org.cryse.widget.persistentsearch.SearchItem;
 import org.cryse.widget.persistentsearch.SearchSuggestionsBuilder;

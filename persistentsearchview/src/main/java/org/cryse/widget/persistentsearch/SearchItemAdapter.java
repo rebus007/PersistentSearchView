@@ -35,14 +35,18 @@ public class SearchItemAdapter extends ArrayAdapter<SearchItem> {
         title.setText(searchItem.getTitle());
         ImageView icon = (ImageView) convertView.findViewById(R.id.imageview_icon);
         if(searchItem.getIcon() == null) {
-            switch (searchItem.getType()) {
-                case SearchItem.TYPE_SEARCH_ITEM_HISTORY:
-                    icon.setImageResource(R.drawable.ic_history_black);
-                    break;
-                default:
-                case SearchItem.TYPE_SEARCH_ITEM_SUGGESTION:
-                    icon.setImageResource(R.drawable.ic_search_black);
-                    break;
+            if (searchItem.getUri() != null) {
+                ImageLoader.loadImage(searchItem.getUri(), icon);
+            } else {
+                switch (searchItem.getType()) {
+                    case SearchItem.TYPE_SEARCH_ITEM_HISTORY:
+                        icon.setImageResource(R.drawable.ic_history_black);
+                        break;
+                    default:
+                    case SearchItem.TYPE_SEARCH_ITEM_SUGGESTION:
+                        icon.setImageResource(R.drawable.ic_search_black);
+                        break;
+                }
             }
         } else {
             icon.setImageDrawable(searchItem.getIcon());

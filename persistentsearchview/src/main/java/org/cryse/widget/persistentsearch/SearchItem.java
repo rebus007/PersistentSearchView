@@ -1,11 +1,13 @@
 package org.cryse.widget.persistentsearch;
 
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 
 public class SearchItem {
     private String mTitle;
     private String mValue;
     private Drawable mIcon;
+    private Uri mUri;
     private int mType;
     public static final int TYPE_SEARCH_ITEM_HISTORY = 0;
     public static final int TYPE_SEARCH_ITEM_SUGGESTION = 1;
@@ -15,7 +17,7 @@ public class SearchItem {
 
 
     public SearchItem(String title, String value) {
-        this(title, value, TYPE_SEARCH_ITEM_DEFAULT, null);
+        this(title, value, TYPE_SEARCH_ITEM_DEFAULT, Uri.EMPTY);
     }
     /**
      * Create a search result with text and an icon
@@ -24,7 +26,7 @@ public class SearchItem {
      * @param type item type
      */
     public SearchItem(String title, String value, int type) {
-        this(title, value, type, null);
+        this(title, value, type, Uri.EMPTY);
     }
 
     public SearchItem(String title, String value, int type, Drawable icon) {
@@ -32,6 +34,13 @@ public class SearchItem {
         this.mValue = value;
         this.mType = type;
         this.mIcon = icon;
+    }
+
+    public SearchItem(String title, String value, int type, Uri uri) {
+        this.mTitle = title;
+        this.mValue = value;
+        this.mType = type;
+        this.mUri = uri;
     }
     
     /**
@@ -68,6 +77,14 @@ public class SearchItem {
 
     public int getType() {
         return mType;
+    }
+
+    public Uri getUri() {
+        return mUri;
+    }
+
+    public void setUri(Uri uri) {
+        this.mUri = uri;
     }
 
     public void setType(int type) {

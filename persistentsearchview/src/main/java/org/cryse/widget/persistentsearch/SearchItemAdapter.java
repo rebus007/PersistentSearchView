@@ -1,6 +1,7 @@
 package org.cryse.widget.persistentsearch;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,7 +36,7 @@ public class SearchItemAdapter extends ArrayAdapter<SearchItem> {
         title.setText(searchItem.getTitle());
         ImageView icon = (ImageView) convertView.findViewById(R.id.imageview_icon);
         if(searchItem.getIcon() == null) {
-            if (searchItem.getUri() != null) {
+            if (searchItem.getUri() != null && searchItem.getUri() != Uri.EMPTY) {
                 ImageLoader.loadImage(searchItem.getUri(), icon);
             } else {
                 switch (searchItem.getType()) {
